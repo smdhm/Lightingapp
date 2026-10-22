@@ -1,0 +1,63 @@
+:root {
+  --bg: #fff;
+  --fg: #111;
+  --gap: 12px;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #0b0b0b; --fg: #f2f2f2; }
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { background: var(--bg); color: var(--fg); }
+body { font-family: "Inter", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+
+.site-header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  mix-blend-mode: difference;
+  color: #fff;
+}
+.site-header a { color: inherit; text-decoration: none; font-size: 14px; letter-spacing: .02em; }
+.brand { font-weight: 500; text-transform: uppercase; letter-spacing: .12em !important; }
+.site-header nav { display: flex; gap: 24px; }
+
+/* The track is tall so the page scrolls; the stage stays pinned while columns move. */
+.track { position: relative; }
+.stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+.columns {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--gap);
+  padding: 0 var(--gap);
+  height: 100%;
+  align-items: start; /* let each column keep its own length */
+}
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  will-change: transform;
+}
+.tile { width: 100%; overflow: hidden; background: rgba(127,127,127,.12); }
+.tile img, .tile video { display: block; width: 100%; height: auto; }
+
+@media (max-width: 720px) {
+  .columns { grid-template-columns: repeat(2, 1fr); }
+  .site-header nav { gap: 16px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage { position: static; height: auto; overflow: visible; }
+  .column { transform: none !important; }
+}
